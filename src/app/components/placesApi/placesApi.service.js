@@ -1,8 +1,3 @@
-var requestParms = {
-  clientId: "IY5CSJJK20BYPPSSKHFEXE45D2HNG5GMHO3VGAOSPYB5MVKB",
-  clientSecret: "Z2D4LBTLPZ5UR1ZDFGYCL1ALFJNP5QZ5Y33ERG0FLSDNM30M",
-  version: "20131230"
-}
 export class PlacesApiService {
   constructor ($resource) {
     'ngInject';
@@ -15,7 +10,11 @@ export class PlacesApiService {
       {
         lat: location.coords.latitude,
         lng: location.coords.longitude,
-        username: 'demo'
+        username: 'mattais',
+        lang:'es',
+        radius:'20',
+        maxRows:'500',
+        callback: 'JSON_CALLBACK'
       },
       {
         get: {method: 'JSONP'}
