@@ -5,15 +5,30 @@ export class PlacesApiService {
   }
 
   getPlaces(location) {
-    let requestUri = 'http://api.geonames.org/findNearbyWikipediaJSON';
+    let requestUri = 'https://en.wikipedia.org/w/api.php';
     return this.$resource(requestUri,
       {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-        username: 'mattais',
-        lang:'es',
-        radius:'20',
-        maxRows:'500',
+        action:'query',
+        list:'geosearch',
+        gslimit:'500',
+        gsradius:'10000',
+        gscoord:location.coords.latitude+'|'+location.coords.longitude,
+        format:'json',
+        callback: 'JSON_CALLBACK'
+      },
+      {
+        get: {method: 'JSONP'}
+      });
+  }
+  getPlacesDetails(place) {
+    let requestUri = 'https://en.wikipedia.org/w/api.php';
+    return this.$resource(requestUri,
+      {
+        action:'query',
+        prop:'extracts',
+        exintro:'true',
+        titles:place.title,
+        format:'json',
         callback: 'JSON_CALLBACK'
       },
       {

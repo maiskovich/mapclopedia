@@ -26,6 +26,13 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
     width: 50px;
   }
 }
+.placeDistance{
+  float:right;
+}
+.headingActive{
+  background-color:#337AB7 !important;
+  color:white !important;
+}
 
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
