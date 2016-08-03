@@ -7,7 +7,7 @@
   <div class="jumbotron">
 
       <div class="panel panel-default" ng-repeat="place in places.places.slice(((places.currentPage-1)*places.itemsPerPage), ((places.currentPage)*places.itemsPerPage))">
-        <div class="panel-heading" ng-class="{'headingActive':place.showPlace}">{{place.title}}<span class="placeDistance">{{place.distance| number : 2}}KM <a ng-click="places.getPlaceDetails(place)" ng-class="{'headingActive':place.extract}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>More</a></span></div>
+        <div class="panel-heading" ng-class="{'headingActive':place.extract}">{{place.title}}<span class="placeDistance">{{place.distance| number : 2}}KM <a ng-click="places.getPlaceDetails(place)" ng-class="{'headingActive':place.extract}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>More</a></span></div>
         <h3 ng-show="place.extract" class="panel-body" ng-bind-html="place.extract"></h3>
       </div>
     <pagination total-items="places.totalItems" ng-model="places.currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="places.itemsPerPage"></pagination>
