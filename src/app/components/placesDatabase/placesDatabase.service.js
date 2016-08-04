@@ -2,9 +2,14 @@ export class PlacesDatabaseService {
   constructor ($localForage) {
     'ngInject';
     this.$localForage=$localForage;
-    this.articlesInstance = $localForage.createInstance({
-      name: 'articles'
-    });
+    try {
+      this.articlesInstance=$localForage.instance('articles');
+    }
+    catch(err) {
+      this.articlesInstance = $localForage.createInstance({
+        name: 'articles'
+      });
+    }
   }
   //Store places, using as key the coordinates at the moment of saving the data
   storePlaces(location,places) {

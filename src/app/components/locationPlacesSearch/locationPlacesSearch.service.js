@@ -20,24 +20,22 @@ function toRad(Value)
   return Value * Math.PI / 180;
 }
 export class LocationPlacesSearchService {
-  constructor (locationApi,placesApi,placesDatabase,$filter,$q) {
+  constructor (placesApi,placesDatabase,$filter,$q) {
     'ngInject';
-    this.locationApi=locationApi;
     this.placesApi=placesApi;
     this.placesDatabase=placesDatabase;
     this.$filter=$filter;
     let self=this;
-    this.oldNearestKey;
-    this.nearestKey;
+    this.oldNearestKey='';
+    this.nearestKey='';
     this.$q=$q;
   }
 
-  getPlaces(){
+  getPlaces(location){
     let deferred = this.$q.defer();
     let self=this;
     this.placesDatabase.getLocationsKeys().then((keys)=>{
-      this.locationApi.getLocation().then((location)=>{
-        this.location=location;
+        self.location=location;
         let minimiumDistance=100;
         angular.forEach(keys, function(key) {
           let keySplit=key.split(" ");
@@ -70,20 +68,18 @@ export class LocationPlacesSearchService {
           });
         }
         //If the closest key is different to the last one we make a new search
-        if(self.oldNearestKey!=self.nearestKey){
+      console.log(self.oldNearestKey);
+        if(self.oldNearestKey!=self.nearestKey || !self.places){
           self.placesDatabase.getPlacesByKey(self.nearestKey).then((places)=>{
             self.places=places;
+            console.log(places);
             self.orderPlacesByDistance();
+            self.oldNearestKey=self.nearestKey;
+            deferred.resolve(self.places);
           });
+        }else{
+          deferred.resolve(self.places);
         }
-        self.orderPlacesByDistance();
-        deferred.resolve(self.places);
-      });
-      //If we got places data we set the oldKey to be the same that the actual one to avoid new calls when data is the same
-      if(self.places){
-        self.oldNearestKey=self.nearestKey;
-      }
-
     });
 
     return deferred.promise;

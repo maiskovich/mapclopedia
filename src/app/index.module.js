@@ -7,7 +7,6 @@ import { PlacesnearController } from './placesnear/placesnear.controller';
 import { PlacesmapController } from './placesmap/placesmap.controller';
 import { ServiceWorkerService } from '../app/components/serviceWorker/serviceWorker.service';
 import { PlacesApiService } from '../app/components/placesApi/placesApi.service';
-import { LocationApiService } from '../app/components/locationApi/locationApi.service';
 import { LocationPlacesSearchService } from '../app/components/locationPlacesSearch/locationPlacesSearch.service';
 import { PlacesDatabaseService } from '../app/components/placesDatabase/placesDatabase.service';
 import { NavbarDirective } from '../app/components/navbar/navbar.directive';
@@ -19,7 +18,6 @@ angular.module('5Mapclopedia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize
   .run(runBlock)
   .service('serviceWorker', ServiceWorkerService)
   .service('placesApi', PlacesApiService)
-  .service('locationApi', LocationApiService)
   .service('locationPlacesSearch', LocationPlacesSearchService)
   .service('placesDatabase', PlacesDatabaseService)
   .controller('PlacesnearController', PlacesnearController)
