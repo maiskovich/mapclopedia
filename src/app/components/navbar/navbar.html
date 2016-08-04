@@ -1,11 +1,27 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
+    <div class="navbar-header">
+      <a ui-sref="home" aria-label="Home page"><img src="assets/images/logo.png" alt="Mapclopedia"></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-login"
+              ng-click="isCollapsed = !isCollapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a  ui-sref="instructions">
+        <div class="logo"></div>
+      </a>
+    </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" collapse="isCollapsed" id="bs-example-navbar-collapse-6">
       <ul class="nav navbar-nav">
+
+        <li ng-class="{'active':activetab=='placesnear'}"><a ui-sref="placesnear">Places near</a></li>
+        <li ng-class="{'active':activetab=='placesmap'}"><a ui-sref="placesmap">Map</a></li>
       </ul>
-      <a ui-sref="home" aria-label="Home page" style="float:right"><img src="assets/images/logo.png" alt="Mapclopedia"></a>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+
+    </div>
+  </div>
+
 </nav>

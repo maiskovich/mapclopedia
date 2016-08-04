@@ -4,6 +4,7 @@ import { config } from './index.config';
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
 import { PlacesnearController } from './placesnear/placesnear.controller';
+import { PlacesmapController } from './placesmap/placesmap.controller';
 import { ServiceWorkerService } from '../app/components/serviceWorker/serviceWorker.service';
 import { PlacesApiService } from '../app/components/placesApi/placesApi.service';
 import { LocationApiService } from '../app/components/locationApi/locationApi.service';
@@ -11,7 +12,7 @@ import { LocationPlacesSearchService } from '../app/components/locationPlacesSea
 import { PlacesDatabaseService } from '../app/components/placesDatabase/placesDatabase.service';
 import { NavbarDirective } from '../app/components/navbar/navbar.directive';
 
-angular.module('5Mapclopedia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'ui.bootstrap','ngMaterial','LocalForageModule'])
+angular.module('5Mapclopedia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'ui.bootstrap','ngMaterial','LocalForageModule','leaflet-directive'])
   .constant('moment', moment)
   .config(config)
   .config(routerConfig)
@@ -22,4 +23,5 @@ angular.module('5Mapclopedia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize
   .service('locationPlacesSearch', LocationPlacesSearchService)
   .service('placesDatabase', PlacesDatabaseService)
   .controller('PlacesnearController', PlacesnearController)
+  .controller('PlacesmapController', PlacesmapController)
   .directive('acmeNavbar', NavbarDirective);

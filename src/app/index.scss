@@ -33,6 +33,10 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
   background-color:#337AB7 !important;
   color:white !important;
 }
+.detailsMap{
+  font-size:12px;
+}
+.detailsMap > p,div {font-size:12px;}
 
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
