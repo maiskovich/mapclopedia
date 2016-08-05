@@ -8,7 +8,8 @@ export class PlacesmapController {
     self.locationPlacesSearch=locationPlacesSearch;
     self.$scope=$scope;
     self.$filter=$filter;
-    navigator.geolocation.watchPosition(function(location){
+    //Set the id of the watch method to a variable to bind it to the navbar
+    self.watchMap=navigator.geolocation.watchPosition(function(location){
       self.getPlacesMap(location);
     }, this.errorReporting, {
       enableHighAccuracy: false,

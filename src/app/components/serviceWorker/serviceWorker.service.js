@@ -8,7 +8,7 @@ export class ServiceWorkerService {
   register() {
     let self=this;
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(reg => {
+      navigator.serviceWorker.register('/service-worker.js').then(reg => {
         this.$log.log('ServiceWorker registration successful with: ', reg);
         if (reg.waiting) {
           this.updateReady(reg.waiting);

@@ -65,20 +65,24 @@ export class LocationPlacesSearchService {
                 }
               });
             });
+              self.places=places.query.geosearch;
+              self.orderPlacesByDistance();
+              self.oldNearestKey=self.nearestKey;
+              deferred.resolve(self.places);
           });
-        }
+        }else{
         //If the closest key is different to the last one we make a new search
-      console.log(self.oldNearestKey);
         if(self.oldNearestKey!=self.nearestKey || !self.places){
           self.placesDatabase.getPlacesByKey(self.nearestKey).then((places)=>{
             self.places=places;
-            console.log(places);
             self.orderPlacesByDistance();
             self.oldNearestKey=self.nearestKey;
             deferred.resolve(self.places);
           });
         }else{
+          self.orderPlacesByDistance();
           deferred.resolve(self.places);
+        }
         }
     });
 

@@ -89,18 +89,30 @@ gulp.task('other', function () {
     .pipe(fileFilter)
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')));
 });
-gulp.task('sw', function () {
-  var fileFilter = $.filter(function (file) {
-    return file.stat.isFile();
-  });
-  return gulp.src([
-    path.join(conf.paths.src, '/sw.js')
-  ])
-    .pipe(fileFilter)
-    .pipe(gulp.dest(path.join(conf.paths.dist, '/')));
+gulp.task('generate-service-worker', function(callback) {
+  var path = require('path');
+  var swPrecache = require('sw-precache');
+  var rootDir = 'dist';
+
+  swPrecache.write(path.join(rootDir, 'service-worker.js'), {
+    staticFileGlobs: [
+      rootDir + '/**.html',
+      rootDir + '/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff,woff2}'
+    ],
+    stripPrefix: rootDir,
+    runtimeCaching: [{
+      urlPattern: /^https:\/\/([a-zA-Z\d-]+\.){0,}openstreetmap\.org(?:\/.*)?$/,
+      handler: 'fastest',
+      options: {
+        cache: {
+          maxEntries: 100
+        }
+      }
+    }],
+  }, callback);
 });
 gulp.task('clean', function () {
   return $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')]);
 });
 
-gulp.task('build', ['html', 'fonts', 'other','sw']);
+gulp.task('build', ['html', 'fonts', 'other','generate-service-worker']);

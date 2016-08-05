@@ -5,11 +5,22 @@ export function NavbarDirective() {
     restrict: 'E',
     templateUrl: 'app/components/navbar/navbar.html',
     scope: {
-      activetab: '='
-    }
+      activetab: '=',
+      locationwatch: '='
+    },
+    controller: NavbarController,
+    controllerAs: 'navController'
   };
-
   return directive;
 }
 
+class NavbarController {
+  constructor($scope) {
+    'ngInject';
+    this.$scope=$scope;
+  }
+  cancelWatch() {
+    navigator.geolocation.clearWatch(this.$scope.locationwatch);
+  }
 
+}

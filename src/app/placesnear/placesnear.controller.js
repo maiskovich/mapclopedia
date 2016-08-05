@@ -5,7 +5,8 @@ export class PlacesnearController {
     this.placesDatabase=placesDatabase;
     this.locationPlacesSearch=locationPlacesSearch;
     let self=this;
-    navigator.geolocation.watchPosition(function(location){
+    //Set the id of the watch method to a variable to bind it to the navbar
+    self.watchNear=navigator.geolocation.watchPosition(function(location){
       self.getPlacesList(location);
     }, this.errorReporting, {
       enableHighAccuracy: false,
