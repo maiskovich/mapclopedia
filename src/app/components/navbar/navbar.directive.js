@@ -6,7 +6,9 @@ export function NavbarDirective() {
     templateUrl: 'app/components/navbar/navbar.html',
     scope: {
       activetab: '=',
-      locationwatch: '='
+      locationwatch: '=',
+      languageoption: '=',
+      languageChange: '&'
     },
     controller: NavbarController,
     controllerAs: 'navController'
@@ -15,9 +17,22 @@ export function NavbarDirective() {
 }
 
 class NavbarController {
-  constructor($scope) {
+  constructor($scope,$window,$rootScope){
     'ngInject';
     this.$scope=$scope;
+    let self=this;
+    self.online=navigator.onLine;
+
+    $window.addEventListener("online", function () {
+      self.online = true;
+      $rootScope.$digest();
+    }, true);
+
+    $window.addEventListener("offline", function () {
+      self.online = false;
+      $rootScope.$digest();
+    }, true);
+
   }
   cancelWatch() {
     navigator.geolocation.clearWatch(this.$scope.locationwatch);

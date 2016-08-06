@@ -19,6 +19,12 @@
         <li ng-class="{'active':activetab=='placesnear'}"><a ng-click="navController.cancelWatch()" ui-sref="placesnear" class="moduleLink">Places near</a></li>
         <li ng-class="{'active':activetab=='placesmap'}"><a ng-click="navController.cancelWatch()" ui-sref="placesmap" class="moduleLink">Map</a></li>
       </ul>
+      <form class="form-inline languageForm" ng-if="navController.online">
+        <div class="form-group">
+          <label for="setlanguage">Language:</label>
+          <select ng-model="languageoption.val" ng-change="languageChange()" id="setlanguage" class="form-control"><option value="en">English</option><option value="es">Español</option></select>
+        </div>
+      </form>
     </div>
   </div>
 

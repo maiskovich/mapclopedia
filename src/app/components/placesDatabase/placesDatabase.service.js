@@ -13,7 +13,7 @@ export class PlacesDatabaseService {
   }
   //Store places, using as key the coordinates at the moment of saving the data
   storePlaces(location,places) {
-    return this.$localForage.setItem(location.coords.latitude+' '+location.coords.longitude,places);
+    return this.$localForage.setItem(location.coords.latitude+'LAT'+location.coords.longitude,places);
   }
   //Get all the keys, this keys are the coordinates of the moment that the data was saved
   getLocationsKeys() {
@@ -35,6 +35,11 @@ export class PlacesDatabaseService {
   getArticlesByKey(key) {
     return this.articlesInstance.getItem(key);
   }
-
-
+  //Delete all(to change language)
+  deletePlaces(){
+    return this.$localForage.clear();
+  }
+  deleteArticles(){
+    return this.articlesInstance.clear();
+  }
 }

@@ -31,14 +31,15 @@ export class LocationPlacesSearchService {
     this.$q=$q;
   }
 
-  getPlaces(location){
+  getPlaces(location,language){
     let deferred = this.$q.defer();
+    let promisesStoreArticles = [];
     let self=this;
     this.placesDatabase.getLocationsKeys().then((keys)=>{
         self.location=location;
         let minimiumDistance=100;
         angular.forEach(keys, function(key) {
-          let keySplit=key.split(" ");
+          let keySplit=key.split("LAT");
           let keyLatitude=keySplit[0];
           let keyLongitude=keySplit[1];
           let distance=calcCrow(keyLatitude,keyLongitude,location.coords.latitude,location.coords.longitude);
@@ -50,25 +51,37 @@ export class LocationPlacesSearchService {
         //If present data is more distant than 10km
         if(minimiumDistance>10){
           //get list of articles near the location
-          self.placesApi.getPlaces(location).get().$promise.then((places)=> {
+          self.placesApi.getPlaces(location,language).get().$promise.then((places)=> {
             //Store the list of articles
-            self.placesDatabase.storePlaces(location,places.query.geosearch);
-            self.nearestKey=location.coords.latitude+' '+location.coords.longitude;
-            //Get details for the new places, if they dont exist
-            self.placesDatabase.getArticlesKeys().then((articlesKeys)=>{
-              angular.forEach(places.query.geosearch,function(place){
-                if(articlesKeys.indexOf(place.pageid) == -1) {
-                  //get details for each article
-                  self.placesApi.getPlacesDetails(place).get().$promise.then((details)=> {
-                    self.placesDatabase.storeArticles(details.query.pages[Object.keys(details.query.pages)[0]]);
+            self.placesDatabase.storePlaces(location,places.query.geosearch).then(()=> {
+                self.nearestKey=location.coords.latitude+'LAT'+location.coords.longitude;
+                //Get details for the new places, if they dont exist
+                self.placesDatabase.getArticlesKeys().then((articlesKeys)=>{
+                  angular.forEach(places.query.geosearch,function(place){
+                    let deferredStoreArticle = self.$q.defer();
+                    promisesStoreArticles.push(deferredStoreArticle.promise);
+                    if(articlesKeys.indexOf(place.pageid) == -1) {
+                      //get details for each article
+                      self.placesApi.getPlacesDetails(place,language).get().$promise.then((details)=> {
+                        self.placesDatabase.storeArticles(details.query.pages[Object.keys(details.query.pages)[0]]).then(()=> {
+                        deferredStoreArticle.resolve();
+                        });
+                      });
+                    }else{
+                      deferredStoreArticle.resolve();
+                    }
                   });
-                }
-              });
+                  self.$q.all(promisesStoreArticles).then(function () {
+                    self.placesDatabase.getPlacesByKey(self.nearestKey).then((placesGet)=>{
+                      self.places=placesGet;
+                      self.orderPlacesByDistance();
+                      self.oldNearestKey=self.nearestKey;
+                      deferred.resolve(self.places);
+                    });
+                  });
+                });
+
             });
-              self.places=places.query.geosearch;
-              self.orderPlacesByDistance();
-              self.oldNearestKey=self.nearestKey;
-              deferred.resolve(self.places);
           });
         }else{
         //If the closest key is different to the last one we make a new search

@@ -4,8 +4,8 @@ export class PlacesApiService {
     this.$resource=$resource;
   }
 
-  getPlaces(location) {
-    let requestUri = 'https://en.wikipedia.org/w/api.php';
+  getPlaces(location,language) {
+    let requestUri = 'https://'+language+'.wikipedia.org/w/api.php';
     return this.$resource(requestUri,
       {
         action:'query',
@@ -20,8 +20,8 @@ export class PlacesApiService {
         get: {method: 'JSONP'}
       });
   }
-  getPlacesDetails(place) {
-    let requestUri = 'https://en.wikipedia.org/w/api.php';
+  getPlacesDetails(place,language) {
+    let requestUri = 'https://'+language+'.wikipedia.org/w/api.php';
     return this.$resource(requestUri,
       {
         action:'query',
