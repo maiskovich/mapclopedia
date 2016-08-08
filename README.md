@@ -22,7 +22,9 @@ with localForage, to be used offline, and then showing the articles order by dis
 distance between cordinates, obtained from StackOverfow). 
 
 The first view is a list of articles showing them in a list, order by distance. The second view is a map, with the articles 
-that are close to the user.
+that are close to the user. In both menu the user can select which language to use, changing the language will delete the
+actual data in localForage, and make new API calls, choosing the API URL based on the language(calling es.wikipedia for spanish
+or calling en.wikipedia for english).
 
 An approach of saving API calls was implemented in the way of getting the maximium number of articles per api call(500), and
 only making a new api call when the available information is distant in more than 10 km to information stored(the informations
