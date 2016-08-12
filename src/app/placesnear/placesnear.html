@@ -6,12 +6,12 @@
 
   <div class="jumbotron">
 
-      <div class="panel panel-default" ng-if="places.places" ng-repeat="place in places.places.slice(((places.currentPage-1)*places.itemsPerPage), ((places.currentPage)*places.itemsPerPage))">
+      <div tabindex="0" class="panel panel-default" ng-if="places.places" ng-repeat="place in places.places.slice(((places.currentPage-1)*places.itemsPerPage), ((places.currentPage)*places.itemsPerPage))">
         <div class="panel-heading" ng-class="{'headingActive':place.extract}">{{place.title}}
-          <span class="placeDistance">{{place.distance| number : 2}}KM <a ng-click="places.getPlaceDetails(place)" class="buttonMore" ng-class="{'headingActive':place.extract}" aria-label="More information of {{place.title}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>More</a></span>
+          <span class="placeDistance">{{place.distance| number : 2}}KM <button tabindex="0" ng-click="places.getPlaceDetails(place)" class="buttonMore" ng-class="{'headingActive':place.extract}" aria-label="More information of {{place.title}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>More</button></span>
           <div class="clear"></div>
         </div>
-        <h3 ng-show="place.extract" class="panel-body" ng-bind-html="place.extract"></h3>
+        <h3 ng-show="place.extract" aria-live="polite" class="panel-body" ng-bind-html="place.extract"></h3>
       </div>
     <pagination ng-if="places.places" total-items="places.totalItems" ng-model="places.currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="places.itemsPerPage"></pagination>
     <div class="alert alert-info textCenter" ng-if="!places.places && !places.locationeError">Finding your location <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> </div>
